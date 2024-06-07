@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scan Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        body {
+            background: url('{{ url_for('static', filename='background2.webp') }}') no-repeat center center fixed;
+            background-size: cover;
+        }
+    </style>
+</head>
+<body>
+    <h1>Scan Results for {{ url }}</h1>
+    {% if 'error' in result %}
+        <p class="error">Error: {{ result.error }}</p>
+    {% else %}
+        <h2>URL Reputation:</h2>
+        <ul>
+            <li>Harmless: {{ result.stats.harmless }}</li>
+            <li>Malicious: {{ result.stats.malicious }}</li>
+            <li>Suspicious: {{ result.stats.suspicious }}</li>
+            <li>Undetected: {{ result.stats.undetected }}</li>
+        </ul>
+        <h2>Detected Threats:</h2>
+        {% if result.stats.harmless == 0 and result.stats.malicious == 0 and result.stats.suspicious == 0 and result.stats.undetected == 0 %}
+            <p class="success">No problems found, you can surf with ease.</p>
+        {% else %}
+            <ul>
+                {% for engine, res in result.threats.items() %}
+                    <li>{{ engine }}: {{ res.result }} ({{ res.category }})</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endif %}
+    <a href="/">Back to Home</a>
+</body>
+</html>

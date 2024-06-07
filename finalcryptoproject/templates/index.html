@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VirusTotal URL Scanner</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        body {
+            background: url('{{ url_for('static', filename='background1.jpeg') }}') no-repeat center center fixed;
+            background-size: cover;
+        }
+    </style>
+</head>
+<body>
+    <h1>VirusTotal URL Scanner</h1>
+    <form action="/scan" method="post">
+        <label for="url">Enter URL to scan:</label>
+        <input type="text" id="url" name="url" required>
+        <button type="submit">Scan</button>
+    </form>
+</body>
+</html>
